@@ -53,12 +53,14 @@ jobs:
           "AnimeDownloader.app"
     
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: anime-downloader-${{ runner.os }}
         path: |
           dist/*
           *.dmg
+        if-no-files-found: error
+        retention-days: 5
     
     - name: Create Release
       if: github.ref == 'refs/tags/v*'
