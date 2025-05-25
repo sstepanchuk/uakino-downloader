@@ -79,35 +79,33 @@ jobs:
         # Copy the binary
         cp dist/anime-downloader "Anime Downloader.app/Contents/MacOS/"
 
-        # Create Info.plist with proper indentation
-        cat > "Anime Downloader.app/Contents/Info.plist" << 'EOL'
-        <?xml version="1.0" encoding="UTF-8">
-        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-        <plist version="1.0">
-        <dict>
-            <key>CFBundleExecutable</key>
-            <string>anime-downloader</string>
-            <key>CFBundleIconFile</key>
-            <string>AppIcon</string>
-            <key>CFBundleIdentifier</key>
-            <string>com.anime.downloader</string>
-            <key>CFBundleInfoDictionaryVersion</key>
-            <string>6.0</string>
-            <key>CFBundleName</key>
-            <string>Anime Downloader</string>
-            <key>CFBundlePackageType</key>
-            <string>APPL</string>
-            <key>CFBundleShortVersionString</key>
-            <string>1.0.0</string>
-            <key>CFBundleVersion</key>
-            <string>1.0.0</string>
-            <key>LSMinimumSystemVersion</key>
-            <string>10.13.0</string>
-            <key>NSHighResolutionCapable</key>
-            <true/>
-        </dict>
-        </plist>
-        EOL
+        # Create Info.plist using echo commands
+        echo '<?xml version="1.0" encoding="UTF-8">' > "Anime Downloader.app/Contents/Info.plist"
+        echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '<plist version="1.0">' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '<dict>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>CFBundleExecutable</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>anime-downloader</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>CFBundleIconFile</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>AppIcon</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>CFBundleIdentifier</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>com.anime.downloader</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>CFBundleInfoDictionaryVersion</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>6.0</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>CFBundleName</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>Anime Downloader</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>CFBundlePackageType</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>APPL</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>CFBundleShortVersionString</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>1.0.0</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>CFBundleVersion</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>1.0.0</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>LSMinimumSystemVersion</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <string>10.13.0</string>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <key>NSHighResolutionCapable</key>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '    <true/>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '</dict>' >> "Anime Downloader.app/Contents/Info.plist"
+        echo '</plist>' >> "Anime Downloader.app/Contents/Info.plist"
 
         # Create DMG
         create-dmg \
