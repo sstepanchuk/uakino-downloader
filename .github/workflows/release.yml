@@ -67,6 +67,7 @@ jobs:
           fi
           # Make the binary executable
           chmod +x dist/anime-downloader
+        fi
 
     - name: Create DMG (macOS only)
       if: runner.os == 'macOS'
