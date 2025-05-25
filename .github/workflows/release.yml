@@ -79,9 +79,9 @@ jobs:
         # Copy the binary
         cp dist/anime-downloader "Anime Downloader.app/Contents/MacOS/"
 
-        # Create Info.plist
-        cat > "Anime Downloader.app/Contents/Info.plist" <<EOL
-        <?xml version="1.0" encoding="UTF-8"?>
+        # Create Info.plist with proper indentation
+        cat > "Anime Downloader.app/Contents/Info.plist" << 'EOL'
+        <?xml version="1.0" encoding="UTF-8">
         <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
         <plist version="1.0">
         <dict>
