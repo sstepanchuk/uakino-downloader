@@ -1,0 +1,75 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags (e.g., v1.0.0)
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+    
+    - name: Build executable
+      run: |
+        if [ "${{ runner.os }}" = "Windows" ]; then
+          pyinstaller --onefile --name anime-downloader downloader.py
+        else
+          pyinstaller --onefile --name anime-downloader downloader.py
+        fi
+    
+    - name: Create DMG (macOS only)
+      if: runner.os == 'macOS'
+      run: |
+        brew install create-dmg
+        mkdir -p AnimeDownloader.app/Contents/MacOS
+        cp dist/anime-downloader AnimeDownloader.app/Contents/MacOS/
+        create-dmg \
+          --volname "Anime Downloader" \
+          --window-pos 200 120 \
+          --window-size 800 400 \
+          --icon-size 100 \
+          --icon "AnimeDownloader.app" 200 190 \
+          --hide-extension "AnimeDownloader.app" \
+          --app-drop-link 600 185 \
+          "anime-downloader.dmg" \
+          "AnimeDownloader.app"
+    
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: anime-downloader-${{ runner.os }}
+        path: |
+          dist/*
+          *.dmg
+    
+    - name: Create Release
+      if: github.ref == 'refs/tags/v*'
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        files: |
+          dist/*
+          *.dmg
+        draft: false
+        prerelease: false
+        generate_release_notes: true
